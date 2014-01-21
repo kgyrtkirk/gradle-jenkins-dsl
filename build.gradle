@@ -7,6 +7,9 @@ group = 'com.terrafolio'
 
 repositories {
 	mavenCentral()
+	maven {
+		url 'http://maven.jenkins-ci.org:8081/content/repositories/releases'
+	}
 }
 
 dependencies {
@@ -18,6 +21,7 @@ dependencies {
    }
    
    compile 'xmlunit:xmlunit:1.3'
+   compile 'org.jenkins-ci.plugins:job-dsl-core:+'
 }
 
 task wrapper(type: Wrapper) {

@@ -52,10 +52,6 @@ class FilterTest {
 				project.branches.eachWithIndex { branchName, map, index ->
 					"compile_${branchName}" {
 						server servers.test1
-						definition {
-							name "${project.name} compile (${branchName})"
-							xml templates.compile.xml
-						}
 					}
 				}
 			}
@@ -75,7 +71,7 @@ class FilterTest {
 				}
 				
 				createJob() { String jobName, String configXML, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -106,7 +102,7 @@ class FilterTest {
 				
 				createJob() { String jobName, String configXML, Map overrides ->
 					assert jobName =~ /master/
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}

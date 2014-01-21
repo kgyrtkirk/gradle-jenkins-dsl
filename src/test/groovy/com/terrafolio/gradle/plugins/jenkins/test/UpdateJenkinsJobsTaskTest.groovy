@@ -54,10 +54,10 @@ class UpdateJenkinsJobsTaskTest {
 				project.branches.eachWithIndex { branchName, map, index ->
 					"compile_${branchName}" {
 						server servers.test1
-						definition {
-							name "${project.name} compile (${branchName})"
-							xml templates.compile.xml
-						}
+//						definition {
+//							name "${project.name} compile (${branchName})"
+//							xml templates.compile.xml
+//						}
 					}
 				}
 			}
@@ -76,7 +76,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides -> 
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 			}
 			
 		}
@@ -122,7 +122,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 			}
 			
 		}
@@ -147,7 +147,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 			}
 			
 		}
@@ -172,7 +172,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			createJob() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 			}
 			
 		}
@@ -196,7 +196,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			createJob() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 				assert overrides.uri == "testUri"
 			}
 			
@@ -227,7 +227,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 			}
 			
 			getJobConfiguration() { String jobName, Map Overrides ->
@@ -235,7 +235,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_releaseX.definition.name
+				assert jobName == project.jenkins.jobs.compile_releaseX.name
 			}
 		}
 		
@@ -261,7 +261,7 @@ class UpdateJenkinsJobsTaskTest {
 			}
 			
 			updateJobConfiguration() { String jobName, String configXML, Map overrides ->
-				assert jobName == project.jenkins.jobs.compile_master.definition.name
+				assert jobName == project.jenkins.jobs.compile_master.name
 				assert overrides.uri == "testUri"
 				assert overrides.params.name == "test"
 			}

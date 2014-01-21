@@ -4,13 +4,13 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.util.Configurable
 
 class JenkinsConfiguration {
-	private final NamedDomainObjectContainer<JenkinsJob> jobs
+	private final NamedDomainObjectContainer<JavaPosseJenkinsJob> jobs
 	private final NamedDomainObjectContainer<JenkinsServerDefinition> servers
 	private final NamedDomainObjectContainer<JenkinsJobDefinition> templates
 	
 	def defaultServer
 	
-	public JenkinsConfiguration(NamedDomainObjectContainer<JenkinsJob> jobs, NamedDomainObjectContainer<JenkinsJobDefinition> templates, NamedDomainObjectContainer<JenkinsServerDefinition> servers) {
+	public JenkinsConfiguration(NamedDomainObjectContainer<JavaPosseJenkinsJob> jobs, NamedDomainObjectContainer<JenkinsJobDefinition> templates, NamedDomainObjectContainer<JenkinsServerDefinition> servers) {
 		this.jobs = jobs
 		this.servers = servers
 		this.templates = templates

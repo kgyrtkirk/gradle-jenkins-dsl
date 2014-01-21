@@ -20,17 +20,15 @@ class JenkinsJobTest {
 		project.jenkins {
 			jobs {
 				test {
-					definition {
-						xml testXml 
-					}
+					steps{shell("magicString1")}
 				}
 			}
 		}
-		project.jenkins.jobs.test.definition {
-			name "test name"
+		project.jenkins.jobs.test {
+					steps{shell("magicString2")}
 		}
-		assert project.jenkins.jobs.test.definition.name == "test name"
-		assert project.jenkins.jobs.test.definition.xml == testXml
+		assert project.jenkins.jobs.test.xml.contains("magicString1")
+		assert project.jenkins.jobs.test.xml.contains("magicString2")
 	}
 	
 	
@@ -42,9 +40,6 @@ class JenkinsJobTest {
 		project.jenkins {
 			jobs {
 				test {
-					definition {
-						xml testXml
-					}
 					serviceOverrides {
 						get([ uri: "getTest", params: [ test: "testGetParam"] ])
 						create([ uri: "createTest", params: [ test: "testCreateParam"] ])

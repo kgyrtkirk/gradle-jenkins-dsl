@@ -13,17 +13,17 @@ class ValidateJenkinsJobsTask extends AbstractJenkinsTask {
 		def success = true
 		getJobs().each { job ->
 			eachServer(job) { JenkinsServerDefinition server, JenkinsService service ->
-				def serverJob = service.getJobConfiguration(job.definition.name, job.serviceOverrides.get)
+				def serverJob = service.getJobConfiguration(job.name, job.serviceOverrides.get)
 				if (serverJob == null) {
-					logger.warn('Jenkins job ' + job.definition.name + ' does not exist on ' + server.url)
+					logger.warn('Jenkins job ' + job.name + ' does not exist on ' + server.url)
 					success = false
 				} else {
 					XMLUnit.setIgnoreWhitespace(true)
-					def xmlDiff = new DetailedDiff(new Diff(job.definition.xml, serverJob))
+					def xmlDiff = new DetailedDiff(new Diff(job.xml, serverJob))
 					if (xmlDiff.similar()) {
-						logger.info('Jenkins job ' + job.definition.name + ' matches the version on ' + server.url) 
+						logger.info('Jenkins job ' + job.name + ' matches the version on ' + server.url) 
 					} else {
-						logger.warn('Jenkins job ' + job.definition.name + ' differs from the version on ' + server.url)
+						logger.warn('Jenkins job ' + job.name + ' differs from the version on ' + server.url)
 						xmlDiff.getAllDifferences().each { Difference difference ->
 							logger.info(difference.toString())
 						}

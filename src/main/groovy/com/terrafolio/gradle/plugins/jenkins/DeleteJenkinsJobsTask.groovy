@@ -9,27 +9,24 @@ class DeleteJenkinsJobsTask extends AbstractJenkinsTask {
 	def void doExecute() {
 		jobsToDelete.each { job ->
 			eachServer(job) { JenkinsServerDefinition server, JenkinsService service ->
-				def existing = service.getJobConfiguration(job.definition.name, job.serviceOverrides.get)
+				def existing = service.getJobConfiguration(job.name, job.serviceOverrides.get)
 				if (existing != null) {
-					logger.warn('Deleting job ' + job.definition.name + ' on ' + server.url)
-					service.deleteJob(job.definition.name, job.serviceOverrides.delete)
+					logger.warn('Deleting job ' + job.name + ' on ' + server.url)
+					service.deleteJob(job.name, job.serviceOverrides.delete)
 				} else {
-					logger.warn('Jenkins job ' + job.definition.name + ' does not exist on ' + server.url)
+					logger.warn('Jenkins job ' + job.name + ' does not exist on ' + server.url)
 				}
 			}
 		}
 	}
 	
-	def void delete(JenkinsJob job) {
+	def void delete(JavaPosseJenkinsJob job) {
 		jobsToDelete += job
 	}
 	
 	def void delete(JenkinsServerDefinition server, String jobName) {
-		def job = new JenkinsJob(jobName)
+		def job = new JavaPosseJenkinsJob(jobName)
 		job.server server
-		job.definition {
-			name jobName
-		}
 		delete(job)
 	}
 }

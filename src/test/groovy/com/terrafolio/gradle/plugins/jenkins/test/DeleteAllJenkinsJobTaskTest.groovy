@@ -48,10 +48,6 @@ class DeleteAllJenkinsJobTaskTest {
 				project.branches.eachWithIndex { branchName, map, index ->
 					"compile_${branchName}" {
 						server servers.test1 
-						definition {
-							name "${project.name} compile (${branchName})"
-							xml templates.compile.xml
-						}
 					}
 				}
 			}
@@ -66,7 +62,7 @@ class DeleteAllJenkinsJobTaskTest {
 			2.times {
 				getJobConfiguration() { String jobName, Map overrides -> "<project><actions></actions><description></description><keepDependencies>false</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>"}
 				deleteJob() { String jobName, Map overrides -> 
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('deleteJob received: ' + jobName + ' but there\'s no job definition with that name!')
 					}
 				}
@@ -84,7 +80,7 @@ class DeleteAllJenkinsJobTaskTest {
 			4.times {
 				getJobConfiguration() { String jobName, Map overrides -> "<project><actions></actions><description></description><keepDependencies>false</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>"}
 				deleteJob() { String jobName, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('deleteJob received: ' + jobName + ' but there\'s no job definition with that name!')
 					}
 				}

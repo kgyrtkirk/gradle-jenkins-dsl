@@ -4,6 +4,7 @@ import static org.junit.Assert.*
 
 import com.terrafolio.gradle.plugins.jenkins.DeleteAllJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.DumpJenkinsJobsTask
+import com.terrafolio.gradle.plugins.jenkins.JavaPosseJenkinsJob;
 import com.terrafolio.gradle.plugins.jenkins.JenkinsConfigurationConvention
 import com.terrafolio.gradle.plugins.jenkins.JenkinsPlugin
 import com.terrafolio.gradle.plugins.jenkins.DeleteJenkinsJobsTask
@@ -12,6 +13,7 @@ import com.terrafolio.gradle.plugins.jenkins.JenkinsJob
 import com.terrafolio.gradle.plugins.jenkins.UpdateAllJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.UpdateJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.ValidateJenkinsJobsTask
+
 import org.gradle.api.NamedDomainObjectCollection
 import org.gradle.api.Project
 import org.gradle.api.plugins.BasePlugin
@@ -66,7 +68,7 @@ class JenkinsPluginTest {
 			}
 		}
 
-		assert project.convention.plugins.jenkins.jenkins.jobs.findByName('testJob') instanceof JenkinsJob
+		assert project.convention.plugins.jenkins.jenkins.jobs.findByName('testJob') instanceof JavaPosseJenkinsJob
 	}
 
 	@Test

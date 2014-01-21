@@ -41,18 +41,10 @@ class DumpJenkinsJobsTaskTest {
 			jobs {
 				job1 {
 					server servers.test1
-					definition {
-						name "job1"
-						xml templates.compile.xml
-					}
 				}
 
 				job2 {
 					server servers.test1
-					definition {
-						name "job2"
-						xml templates.compile.xml
-					}
 				}
 			}
 		}
@@ -74,7 +66,7 @@ class DumpJenkinsJobsTaskTest {
 			assert jobFile.exists()
 			
 			XMLUnit.setIgnoreWhitespace(true)
-			def xmlDiff = new Diff(job.definition.xml, jobFile.getText())
+			def xmlDiff = new Diff(job.xml, jobFile.getText())
 			assert xmlDiff.similar()
 		}
 	}
@@ -116,7 +108,7 @@ class DumpJenkinsJobsTaskTest {
 		project.jenkins.jobs.each { job ->
 			def jobFile = new File(dumpDir, "${job.name}-config-test1.xml")
 			assert jobFile.exists()
-			assert jobFile.getText() == job.definition.xml
+			assert jobFile.getText() == job.xml
 		}
 	}
 	
@@ -141,7 +133,7 @@ class DumpJenkinsJobsTaskTest {
 		
 		def jobFile = new File(dumpDir, "job1-config-test1.xml")
 		assert jobFile.exists()
-		assert jobFile.getText() == project.jenkins.jobs.job1.definition.xml
+		assert jobFile.getText() == project.jenkins.jobs.job1.xml
 		
 		jobFile = new File(dumpDir, "job1-config-test3.xml")
 		assert jobFile.exists()

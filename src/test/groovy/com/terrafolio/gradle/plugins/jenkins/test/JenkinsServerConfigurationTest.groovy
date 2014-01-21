@@ -52,10 +52,6 @@ class JenkinsServerConfigurationTest {
 				project.branches.eachWithIndex { branchName, map, index ->
 					"compile_${branchName}" {
 						server servers.test1
-						definition {
-							name "${project.name} compile (${branchName})"
-							xml templates.compile.xml
-						}
 					}
 				}
 			}
@@ -75,7 +71,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -122,7 +118,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -154,7 +150,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -186,7 +182,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -221,7 +217,7 @@ class JenkinsServerConfigurationTest {
 				
 				createJob() { String jobName, String configXML, Map overrides ->
 					assert project.ext.credentialsGathered
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -287,7 +283,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -320,7 +316,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -352,7 +348,7 @@ class JenkinsServerConfigurationTest {
 				}
 				
 				createJob() { String jobName, String configXML, Map overrides ->
-					if (! project.jenkins.jobs.collect { it.definition.name }.contains(jobName)) {
+					if (! project.jenkins.jobs.collect { it.name }.contains(jobName)) {
 						throw new Exception('createJob called with: ' + jobName + ' but no job definition exists with that name!')
 					}
 				}
@@ -373,9 +369,9 @@ class JenkinsServerConfigurationTest {
 				job.serverDefinitions.each { server ->
 					def definition = job.getServerSpecificDefinition(server)
 					if (server.name == 'test2') {
-						assert definition.xml == "<project><actions></actions><description>This is for test2</description><keepDependencies>false</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>"
+						assert definition.xml.contains("This is for test2")
 					} else {
-						assert definition.xml == "<project><actions></actions><description></description><keepDependencies>false</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>"
+						assert !definition.xml.contains("This is for test2")
 					}
 				}
 			}

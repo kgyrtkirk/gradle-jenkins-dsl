@@ -9,30 +9,26 @@ by using this plugin enables the following:
 apply plugin: 'jenkins'
 
 jenkins {
-        servers {
-                testing {
-                        url 'http://localhost:8081'
-                        secure false         
-//                        username "testuser" // optional
-//                        password "testpass" // optional
-                }
-        }
+	servers {
+		testing {
+			url 'http://localhost:8081'
+			secure false
+			//username "testuser" // optional
+			//password "testpass" // optional
+		}
+	}
 
-        defaultServer servers.testing // optional
-        jobs {
-                test {
-                        server servers.testing
-			steps {
-				shell("ls -l")
-			}
-                }
+	defaultServer servers.testing // optional
+	jobs {
+		test {
+			server servers.testing
+			steps { shell("ls -l") }
+		}
 
-                test2 {
-			steps {
-				shell("ls")
-			}
-                }
-        }
+		test2 {
+			steps { shell("ls") }
+		}
+	}
 }
 ```
 

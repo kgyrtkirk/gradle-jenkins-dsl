@@ -1,14 +1,18 @@
 in this fork:
-	* merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
 
-which enables the following:
+[X] merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
+[ ] push plugin into some repository - you have to build it yourself
+
+by using this plugin enables the following:
+
+```groovy
 apply plugin: 'jenkins'
 
 jenkins {
         servers {
                 testing {
                         url 'http://localhost:8081'
-                        secure false         // optional
+                        secure false         
 //                        username "testuser" // optional
 //                        password "testpass" // optional
                 }
@@ -30,13 +34,13 @@ jenkins {
                 }
         }
 }
-
+```
 
 jenkins-job-dsl home:
 https://github.com/jenkinsci/job-dsl-plugin/wiki	
 
 
-
+original plugin's readme continues:
 
 gradle-jenkins-plugin
 =====================

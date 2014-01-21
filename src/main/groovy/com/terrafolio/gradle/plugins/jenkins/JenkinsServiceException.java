@@ -1,6 +1,6 @@
 package com.terrafolio.gradle.plugins.jenkins;
 
-public class JenkinsServiceException extends Exception {
+public class JenkinsServiceException extends RuntimeException {
 
 	public JenkinsServiceException() {
 		super();

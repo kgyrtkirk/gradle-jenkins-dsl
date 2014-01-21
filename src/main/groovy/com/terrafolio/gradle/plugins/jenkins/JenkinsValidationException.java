@@ -1,6 +1,6 @@
 package com.terrafolio.gradle.plugins.jenkins;
 
-public class JenkinsValidationException extends Exception {
+public class JenkinsValidationException extends RuntimeException {
 
 	public JenkinsValidationException() {
 		super();

@@ -1,3 +1,43 @@
+in this fork:
+	* merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
+
+which enables the following:
+apply plugin: 'jenkins'
+
+jenkins {
+        servers {
+                testing {
+                        url 'http://localhost:8081'
+                        secure false         // optional
+//                        username "testuser" // optional
+//                        password "testpass" // optional
+                }
+        }
+
+        defaultServer servers.testing // optional
+        jobs {
+                test {
+                        server servers.testing
+			steps {
+				shell("ls -l")
+			}
+                }
+
+                test2 {
+			steps {
+				shell("ls")
+			}
+                }
+        }
+}
+
+
+jenkins-job-dsl home:
+https://github.com/jenkinsci/job-dsl-plugin/wiki	
+
+
+
+
 gradle-jenkins-plugin
 =====================
 

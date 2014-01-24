@@ -3,13 +3,20 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
 group = 'hu.rxd'
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven {
-		url 'http://maven.jenkins-ci.org:8081/content/repositories/releases'
+		url 'https://oss.sonatype.org/content/groups/staging'
 	}
+//	maven {
+//		url 'http://maven.jenkins-ci.org:8081/content/repositories/releases'
+//	}
 }
 
 dependencies {
@@ -21,9 +28,7 @@ dependencies {
    }
    
    compile 'xmlunit:xmlunit:1.3'
-   compile('org.jenkins-ci.plugins:job-dsl-core:1.19'){
-	exclude group:'org.slf4j'
-	}
+   compile('hu.rxd:job-dsl-core:1.20-rxd-1')
 }
 
 task wrapper(type: Wrapper) {
@@ -47,11 +52,10 @@ artifacts {
 	archives sourcesJar
 }
 
-/*signing {
+signing {
 	sign configurations.archives
-}*/
+}
 
-/*
 uploadArchives {
 	repositories {
 		mavenDeployer {
@@ -62,15 +66,15 @@ uploadArchives {
 			}
  
 			pom.project {
-			   name 'gradle-jenkins-plugin'
+			   name 'gradle-jenkins-dsl'
 			   packaging 'jar'
-			   description 'This is a gradle plugin for programmatically configuring Jenkins jobs.'
-			   url 'https://github.com/ghale/gradle-jenkins-plugin'
+			   description 'This is a gradle plugin for programmatically configuring Jenkins jobs, using javaposse dsl dialect'
+			   url 'https://github.com/kgyrtkirk/gradle-jenkins-dsl'
  
 			   scm {
-				   url 'https://github.com/ghale/gradle-jenkins-plugin.git'
-				   connection 'scm:https://github.com/ghale/gradle-jenkins-plugin.git'
-				   developerConnection 'scm:git@github.com/ghale/gradle-jenkins-plugin.git'
+				   url 'https://github.com/kgyrtkirk/gradle-jenkins-dsl.git'
+				   connection 'scm:https://github.com/kgyrtkirk/gradle-jenkins-dsl.git'
+				   developerConnection 'scm:git@github.com/kgyrtkirk/gradle-jenkins-dsl.git'
 			   }
  
 			   licenses {
@@ -83,6 +87,11 @@ uploadArchives {
  
 			   developers {
 				   developer {
+					   id 'kirk'
+					   name 'Zoltan Nagy'
+					   email 'kirk@rxd.hu'
+				   }
+				   developer {
 					   id 'ghale'
 					   name 'Gary Hale'
 					   email 'ghhale@computer.org'
@@ -92,4 +101,4 @@ uploadArchives {
 		}
 	}
 }
-*/
+

@@ -33,10 +33,13 @@ jenkins {
 ```
 
 jenkins-job-dsl home:
-https://github.com/jenkinsci/job-dsl-plugin/wiki	
+https://github.com/jenkinsci/job-dsl-plugin/wiki
 
 
-original plugin's readme continues:
+This plugin started as a fork of ghale's gradle-jenkins-plugin (https://github.com/ghale/gradle-jenkins-plugin/wiki)
+
+thank you for creating 
+original plugin's :
 
 gradle-jenkins-plugin
 =====================

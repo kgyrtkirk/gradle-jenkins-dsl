@@ -1,12 +1,20 @@
 in this fork:
 
-[X] merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
-[ ] push plugin into some repository - you have to build it yourself
+* merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
+* plugin available in mavencentral along with job-dsl-core
+
 
 by using this plugin enables the following:
 
 ```groovy
 apply plugin: 'jenkins'
+
+buildscript {
+	repositories { mavenCentral() }
+	dependencies {
+		classpath('hu.rxd:gradle-jenkins-dsl:0.5.+')
+	}
+}
 
 jenkins {
 	servers {

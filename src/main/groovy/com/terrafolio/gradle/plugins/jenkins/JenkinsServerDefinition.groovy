@@ -1,5 +1,7 @@
 package com.terrafolio.gradle.plugins.jenkins
 
+import groovyx.net.http.URIBuilder
+
 class JenkinsServerDefinition {
 	def name
 	def url
@@ -12,6 +14,20 @@ class JenkinsServerDefinition {
 		this.name = name
 	}
 	
+	def uri(String uri) {
+		URI u=new URI(uri)
+		if(u.userInfo != null && u.userInfo.length() > 0){
+			def parts=u.userInfo.split(":")
+			this.username=parts[0]
+			this.password=parts[1]
+		}else{
+			secure=false
+		}
+		URIBuilder urib=new URIBuilder(u)
+		urib.userInfo=null
+		this.url = urib.toString()
+	}
+
 	def url(String url) {
 		this.url = url
 	}
@@ -58,5 +74,9 @@ class JenkinsServerDefinition {
 				}
 			}
 		}
+	}
+	
+	String toString(){
+		"username: ${username}, password:${password}, url:${url}, secure:${secure}"
 	}
 }

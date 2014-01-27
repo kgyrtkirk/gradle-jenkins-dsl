@@ -2,6 +2,7 @@ package com.terrafolio.gradle.plugins.jenkins
 
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.util.Configurable
+import org.gradle.util.ConfigureUtil;
 
 class JenkinsConfiguration {
 	private final NamedDomainObjectContainer<JavaPosseJenkinsJob> jobs
@@ -16,19 +17,35 @@ class JenkinsConfiguration {
 		this.templates = templates
 	}
 	
-	def jobs(Closure closure) {
-		jobs.configure(closure)
+	def job(String name,Closure closure) {
+		JavaPosseJenkinsJob job=jobs.create(name)
+		ConfigureUtil.configure(closure, job)
+		job
 	}
 	
-	def templates(Closure closure) {
-		templates.configure(closure)
-	}
-	
-	def servers(Closure closure) {
-		servers.configure(closure)
+	def server(String name,Closure closure) {
+		JenkinsServerDefinition server=servers.create(name)
+		ConfigureUtil.configure(closure, server)
+		server
 	}
 	
 	def defaultServer(JenkinsServerDefinition server) {
 		this.defaultServer = server
 	} 
+	
+	@Deprecated
+	def jobs(Closure closure) {
+		jobs.configure(closure)
+	}
+	
+	@Deprecated
+	def templates(Closure closure) {
+		templates.configure(closure)
+	}
+	
+	@Deprecated
+	def servers(Closure closure) {
+		servers.configure(closure)
+	}
+	
 }

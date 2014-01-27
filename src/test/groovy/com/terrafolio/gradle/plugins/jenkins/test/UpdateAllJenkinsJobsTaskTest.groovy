@@ -31,28 +31,19 @@ class UpdateAllJenkinsJobsTaskTest {
 		]
 		
 		project.jenkins {
-			servers {
-				test1 {
+			server('test1'){
 					url 'test1'
 					username 'test1'
 					password 'test1'
 				}
-				test2 {
+			server('test2'){
 					url 'test2'
 					username 'test2'
 					password 'test2'
 				}
-			}
-			templates {
-				compile {
-					xml "<project><actions></actions><description></description><keepDependencies>false</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>"
-				}
-			}
-			jobs {
-				project.branches.eachWithIndex { branchName, map, index ->
-					"compile_${branchName}" {
-						server servers.test1
-					}
+			project.branches.eachWithIndex { branchName, map, index ->
+				job("compile_${branchName}") {
+					server servers.test1 
 				}
 			}
 		}

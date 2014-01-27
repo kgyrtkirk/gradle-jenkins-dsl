@@ -18,7 +18,7 @@ class JenkinsConfiguration {
 	}
 	
 	def job(String name,Closure closure) {
-		JavaPosseJenkinsJob job=jobs.create(name)
+		JavaPosseJenkinsJob job=jobs.maybeCreate(name)
 		ConfigureUtil.configure(closure, job)
 		job
 	}
@@ -34,18 +34,8 @@ class JenkinsConfiguration {
 	} 
 	
 	@Deprecated
-	def jobs(Closure closure) {
-		jobs.configure(closure)
-	}
-	
-	@Deprecated
 	def templates(Closure closure) {
 		templates.configure(closure)
-	}
-	
-	@Deprecated
-	def servers(Closure closure) {
-		servers.configure(closure)
 	}
 	
 }

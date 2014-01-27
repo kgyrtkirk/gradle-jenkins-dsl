@@ -63,8 +63,7 @@ class JenkinsPluginTest {
 	@Test
 	void configure_addsJenkinsJob() {
 		project.jenkins {
-			jobs {
-				testJob
+			job('testJob'){
 			}
 		}
 

@@ -18,13 +18,12 @@ class JenkinsJobTest {
 		def testXml = '<test>test</test>'
 		plugin.apply(project)
 		project.jenkins {
-			jobs {
-				test {
+			job('test') {
 					steps{shell("magicString1")}
-				}
+				
 			}
 		}
-		project.jenkins.jobs.test {
+		project.jenkins.job('test') {
 					steps{shell("magicString2")}
 		}
 		assert project.jenkins.jobs.test.xml.contains("magicString1")
@@ -38,8 +37,7 @@ class JenkinsJobTest {
 		def testXml = '<test>test</test>'
 		plugin.apply(project)
 		project.jenkins {
-			jobs {
-				test {
+			job('test') {
 					serviceOverrides {
 						get([ uri: "getTest", params: [ test: "testGetParam"] ])
 						create([ uri: "createTest", params: [ test: "testCreateParam"] ])
@@ -47,7 +45,6 @@ class JenkinsJobTest {
 						delete([ uri: "deleteTest", params: [ test: "testDeleteParam"] ])
 					}
 				}
-			}
 		}
 
 		assert project.jenkins.jobs.test.serviceOverrides.get.uri == "getTest"

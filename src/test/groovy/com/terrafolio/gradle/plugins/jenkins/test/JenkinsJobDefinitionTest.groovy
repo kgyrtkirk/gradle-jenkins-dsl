@@ -36,13 +36,11 @@ class JenkinsJobDefinitionTest {
 	@Test
 	def void configure_xmlAsString() {
 		project.jenkins {
-			jobs {
-				test {
+			job('test'){
 					steps{
 						shell("asd")
 					}
 				}
-			}
 		}
 		
 		assert project.jenkins.jobs.findByName('test').xml.contains('asd')

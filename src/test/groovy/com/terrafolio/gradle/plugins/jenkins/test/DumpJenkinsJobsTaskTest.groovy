@@ -25,12 +25,10 @@ class DumpJenkinsJobsTaskTest {
 		plugin.apply(project)
 
 		project.jenkins {
-			servers {
-				test1 {
+			server('test1') {
 					url 'test1'
 					username 'test1'
 					password 'test1'
-				}
 			}
 			
 			templates {
@@ -38,15 +36,13 @@ class DumpJenkinsJobsTaskTest {
 				compile2 { xml "<?xml version='1.0' encoding='UTF-8'?><project><actions></actions><description></description><keepDependencies>true</keepDependencies><properties></properties><scm class='hudson.scm.NullSCM'></scm><canRoam>true</canRoam><disabled>false</disabled><blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding><blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding><triggers class='vector'></triggers><concurrentBuild>false</concurrentBuild><builders></builders><publishers></publishers><buildWrappers></buildWrappers></project>" }
 			}
 			
-			jobs {
-				job1 {
+				job('job1') {
 					server servers.test1
 				}
 
-				job2 {
+				job('job2') {
 					server servers.test1
 				}
-			}
 		}
 	}
 	
@@ -74,6 +70,7 @@ class DumpJenkinsJobsTaskTest {
 	@Test
 	def void execute_observesJobFilter() {
 		project.ext.jenkinsJobFilter = 'job1'
+		project.tasks.dumpJenkinsJobs.prettyPrint=true
 		project.tasks.dumpJenkinsJobs.execute()
 		
 		def dumpDir = new File('build/tmp/test/build/jobs')
@@ -115,10 +112,8 @@ class DumpJenkinsJobsTaskTest {
 	@Test
 	def void execute_dumpsMultipleServerConfigs() {
 		project.tasks.dumpJenkinsJobs.prettyPrint = false
-		project.jenkins.servers {
-			test3 {
+		project.jenkins.server('test3'){
 				url 'http://test3'
-			}
 		}
 		project.jenkins.jobs.job1.server(
 			project.jenkins.servers.test3,

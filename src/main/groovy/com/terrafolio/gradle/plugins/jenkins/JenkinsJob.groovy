@@ -5,9 +5,9 @@ import org.gradle.util.ConfigureUtil;
 import groovy.lang.Closure;
 import javaposse.jobdsl.dsl.Job
 
-class JavaPosseJenkinsJob extends Job {
+class JenkinsJob extends Job {
 
-	JavaPosseJenkinsJob(String jobName){
+	JenkinsJob(String jobName){
 		super(null)
 		name=jobName
 	}

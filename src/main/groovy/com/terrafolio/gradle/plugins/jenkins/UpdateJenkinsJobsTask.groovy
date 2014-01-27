@@ -29,7 +29,7 @@ class UpdateJenkinsJobsTask extends AbstractJenkinsTask {
 		}
 	}
 	
-	def void update(JavaPosseJenkinsJob job) {
+	def void update(JenkinsJob job) {
 		jobsToUpdate += job
 	}
 }

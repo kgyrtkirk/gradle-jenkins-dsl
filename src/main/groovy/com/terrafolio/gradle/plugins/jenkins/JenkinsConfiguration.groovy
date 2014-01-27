@@ -5,20 +5,20 @@ import org.gradle.util.Configurable
 import org.gradle.util.ConfigureUtil;
 
 class JenkinsConfiguration {
-	private final NamedDomainObjectContainer<JavaPosseJenkinsJob> jobs
+	private final NamedDomainObjectContainer<JenkinsJob> jobs
 	private final NamedDomainObjectContainer<JenkinsServerDefinition> servers
 	private final NamedDomainObjectContainer<JenkinsJobDefinition> templates
 	
 	def defaultServer
 	
-	public JenkinsConfiguration(NamedDomainObjectContainer<JavaPosseJenkinsJob> jobs, NamedDomainObjectContainer<JenkinsJobDefinition> templates, NamedDomainObjectContainer<JenkinsServerDefinition> servers) {
+	public JenkinsConfiguration(NamedDomainObjectContainer<JenkinsJob> jobs, NamedDomainObjectContainer<JenkinsJobDefinition> templates, NamedDomainObjectContainer<JenkinsServerDefinition> servers) {
 		this.jobs = jobs
 		this.servers = servers
 		this.templates = templates
 	}
 	
 	def job(String name,Closure closure) {
-		JavaPosseJenkinsJob job=jobs.maybeCreate(name)
+		JenkinsJob job=jobs.maybeCreate(name)
 		ConfigureUtil.configure(closure, job)
 		job
 	}

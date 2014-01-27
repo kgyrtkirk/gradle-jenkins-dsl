@@ -20,12 +20,12 @@ class DeleteJenkinsJobsTask extends AbstractJenkinsTask {
 		}
 	}
 	
-	def void delete(JavaPosseJenkinsJob job) {
+	def void delete(JenkinsJob job) {
 		jobsToDelete += job
 	}
 	
 	def void delete(JenkinsServerDefinition server, String jobName) {
-		def job = new JavaPosseJenkinsJob(jobName)
+		def job = new JenkinsJob(jobName)
 		job.server server
 		delete(job)
 	}

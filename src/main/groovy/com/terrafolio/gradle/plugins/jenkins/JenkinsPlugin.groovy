@@ -22,8 +22,8 @@ class JenkinsPlugin implements Plugin<Project> {
 	}
 
 	def applyConventions(Project project) {
-		def jobs = project.container(JavaPosseJenkinsJob) { name ->
-			new JavaPosseJenkinsJob(name)
+		def jobs = project.container(JenkinsJob) { name ->
+			new JenkinsJob(name)
 		}
 		
 		def templates = project.container(JenkinsJobDefinition) { name ->

@@ -9,7 +9,6 @@ import com.terrafolio.gradle.plugins.jenkins.JenkinsConfigurationConvention
 import com.terrafolio.gradle.plugins.jenkins.JenkinsPlugin
 import com.terrafolio.gradle.plugins.jenkins.DeleteJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.JenkinsConfiguration
-import com.terrafolio.gradle.plugins.jenkins.JenkinsJob
 import com.terrafolio.gradle.plugins.jenkins.UpdateAllJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.UpdateJenkinsJobsTask
 import com.terrafolio.gradle.plugins.jenkins.ValidateJenkinsJobsTask

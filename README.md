@@ -2,7 +2,10 @@ in this fork:
 
 * merged functionality of original gradle-jenkins-plugin + jenkins/job-dsl-core
 * plugin available in mavencentral along with job-dsl-core
-
+* gradle declaration dialect for servers/jobs have been changed in 0.6
+	* servers { a {B} ; b {B} } -> server('a') {B} ; server('b') {B} 
+	* template support has been removed temporarily
+	* 'uri' declaration for servers
 
 by using this plugin enables the following:
 
@@ -12,30 +15,30 @@ apply plugin: 'jenkins'
 buildscript {
 	repositories { mavenCentral() }
 	dependencies {
-		classpath('hu.rxd:gradle-jenkins-dsl:0.5.+')
+		classpath('hu.rxd:gradle-jenkins-dsl:0.6.+')
 	}
 }
 
 jenkins {
-	servers {
-		testing {
-			url 'http://localhost:8081'
-			secure false
-			//username "testuser" // optional
-			//password "testpass" // optional
-		}
+	server('testing') {
+		url 'http://localhost:8081'
+		secure false
+		//username "testuser" // optional
+		//password "testpass" // optional
+	}
+	server('t1'){
+		uri 'https://user:pass@example.com'
 	}
 
 	defaultServer servers.testing // optional
-	jobs {
-		test {
-			server servers.testing
-			steps { shell("ls -l") }
-		}
 
-		test2 {
-			steps { shell("ls") }
-		}
+	job('test'){
+		server servers.testing
+		steps { shell("ls -l") }
+	}
+
+	job('test2') {
+		steps { shell("ls") }
 	}
 }
 ```

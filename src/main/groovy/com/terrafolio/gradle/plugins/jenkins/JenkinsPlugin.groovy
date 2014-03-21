@@ -33,8 +33,12 @@ class JenkinsPlugin implements Plugin<Project> {
 		def servers = project.container(JenkinsServerDefinition) { name ->
 			new JenkinsServerDefinition(name)
 		}
-		
-		def configuration = new JenkinsConfiguration(jobs, templates, servers)
+
+		def views = project.container(JenkinsView) { name ->
+			new JenkinsView(name)
+		}
+
+		def configuration = new JenkinsConfiguration(jobs,  views, templates, servers)
 		project.convention.plugins.jenkins = new JenkinsConfigurationConvention(configuration)
 	}
 }

@@ -18,7 +18,7 @@ abstract class AbstractJenkinsTask extends DefaultTask {
 	
 	def abstract void doExecute()
 	
-	def List<JenkinsServerDefinition> getServerDefinitions(JenkinsJob job) {
+	def List<JenkinsServerDefinition> getServerDefinitions(job) {
 		def serverDefinitions = []
 		if (job.serverDefinitions == null || job.serverDefinitions.isEmpty()) {
 			if (project.jenkins.defaultServer != null) {
@@ -54,14 +54,27 @@ abstract class AbstractJenkinsTask extends DefaultTask {
 		return jobs
 	}
 	
+	def List<JenkinsView> getViews() {
+		def views = []
+		if (project.hasProperty('jenkinsJobFilter')) {
+			views = project.jenkins.views.findAll { it.name ==~ project.jenkinsJobFilter } as List
+		} else {
+			views = project.jenkins.views as List
+		}
+		
+		return views
+	}
+
+	
 	def void initialize() {
 		getJobs().each { job ->	getServerDefinitions(job) }
 	}
 	
-	def void eachServer(JenkinsJob job, Closure closure) {
+	def void eachServer(Object job, Closure closure) {
 		getServerDefinitions(job).each { server ->
 			def service = server.secure ? new JenkinsRESTServiceImpl(server.url, server.username, server.password) : new JenkinsRESTServiceImpl(server.url)
 			closure.call(server, service)
 		}
 	}
+
 }

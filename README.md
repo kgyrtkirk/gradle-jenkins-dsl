@@ -6,6 +6,9 @@ in this fork:
 	* servers { a {B} ; b {B} } -> server('a') {B} ; server('b') {B} 
 	* template support has been removed temporarily
 	* 'uri' declaration for servers
+* versioning scheme changed to start with base job-dsl-core version...from now on: 1.22.1
+* views are supported
+
 
 by using this plugin enables the following:
 
@@ -15,7 +18,7 @@ apply plugin: 'jenkins'
 buildscript {
 	repositories { mavenCentral() }
 	dependencies {
-		classpath('hu.rxd:gradle-jenkins-dsl:0.6.+')
+		classpath('hu.rxd:gradle-jenkins-dsl:1.22.+')
 	}
 }
 
@@ -39,6 +42,10 @@ jenkins {
 
 	job('test2') {
 		steps { shell("ls") }
+	}
+	
+	view('view1') {
+	   
 	}
 }
 ```

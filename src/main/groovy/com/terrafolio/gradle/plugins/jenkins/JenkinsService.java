@@ -18,4 +18,10 @@ public interface JenkinsService {
 	public void deleteJob(String jobName) throws JenkinsServiceException;
 	
 	public void deleteJob(String jobName, Map overrides) throws JenkinsServiceException;
+	
+	
+	public String getViewConfiguration(String jobName, Map overrides) throws JenkinsServiceException;
+	public void createView(String jobName, String configXml, Map overrides) throws JenkinsServiceException;
+	public void updateViewConfiguration(String jobName, String configXml, Map overrides) throws JenkinsServiceException;
+	
 }

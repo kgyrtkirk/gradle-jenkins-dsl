@@ -113,6 +113,30 @@ class JenkinsRESTServiceImplTest {
 		}
 	}
 	
+	
+	@Test
+	def void createView_postsConfigXml() {
+		def postMap
+		mockRESTClient.demand.with {
+			post() { Map<String, ?> map ->
+				postMap = map
+				HttpResponse baseResponse = new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, "OK"))
+				HttpResponseDecorator response = new HttpResponseDecorator(baseResponse, new XmlSlurper().parseText("<test1><test2>srv value</test2></test1>"))
+				return response
+			}
+		}
+		
+		mockRESTClient.ignore('getClient')
+		
+		mockRESTClient.use {
+			def JenkinsRESTServiceImpl service = new JenkinsRESTServiceImpl(url, username, password)
+			service.createView("compile", "<test1><test2>srv value</test2></test1>",[:])
+			assert postMap.body == "<test1><test2>srv value</test2></test1>"
+			assert postMap.query.name == "compile"
+			assert postMap.path == "/createView"
+		}
+	}
+
 	@Test (expected = JenkinsServiceException.class)
 	def void createJob_throwsExceptionOnFailure() {
 		mockRESTClient.demand.with {

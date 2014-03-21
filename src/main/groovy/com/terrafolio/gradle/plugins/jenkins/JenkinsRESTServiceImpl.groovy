@@ -66,11 +66,20 @@ class JenkinsRESTServiceImpl implements JenkinsService {
 	}
 	
 	@Override
-	public String getJobConfiguration(String jobName, Map overrides)
+	public String getJobConfiguration(String jobName, Map overrides) throws JenkinsServiceException {
+		return internalGetConfiguration("/job/${jobName}/config.xml",overrides);
+	}
+
+	@Override
+	public String getViewConfiguration(String jobName, Map overrides) throws JenkinsServiceException {
+		return internalGetConfiguration("/view/${jobName}/config.xml",overrides);
+	}
+
+	private String internalGetConfiguration(String path, Map overrides)
 			throws JenkinsServiceException {
 		def responseXml
 		try {
-			def uri = "/job/${jobName}/config.xml"
+			def uri = path
 			def params = [:]
 			
 			if (overrides.containsKey("uri")) {
@@ -106,11 +115,21 @@ class JenkinsRESTServiceImpl implements JenkinsService {
 	}
 	
 	@Override
-	public void updateJobConfiguration(String jobName, String configXml,
+	public void updateJobConfiguration(String jobName, String configXml, Map overrides) throws JenkinsServiceException {
+		internalUpdateConfiguration("/job/${jobName}/config.xml",configXml,overrides)
+	}
+
+	@Override
+	public void updateViewConfiguration(String jobName, String configXml, Map overrides) throws JenkinsServiceException {
+		internalUpdateConfiguration("/view/${jobName}/config.xml",configXml,overrides)
+	}
+
+	private void internalUpdateConfiguration(String path, String configXml,
 			Map overrides) throws JenkinsServiceException {
+			
 		def response
 		try {
-			def uri = "/job/${jobName}/config.xml"
+			def uri = path
 			def params = [:]
 			
 			if (overrides.containsKey("uri")) {
@@ -164,10 +183,15 @@ class JenkinsRESTServiceImpl implements JenkinsService {
 	@Override
 	public void createJob(String jobName, String configXml, Map overrides)
 			throws JenkinsServiceException {
+		internalCreate("/createItem",jobName,configXml,overrides)
+	}
+
+	private void internalCreate(String path, String itemName, String configXml, Map overrides)
+			throws JenkinsServiceException {
 		def response
 		try {
-			def uri = "/createItem"
-			def params = [ name : jobName ]
+			def uri = path
+			def params = [ name : itemName ]
 			
 			if (overrides.containsKey("uri")) {
 				uri = overrides.uri
@@ -184,4 +208,8 @@ class JenkinsRESTServiceImpl implements JenkinsService {
 		
 	}
 
+	@Override
+	public void createView(String jobName, String configXml, Map overrides){
+		internalCreate("/createView",jobName,configXml,overrides)
+	}
 }
